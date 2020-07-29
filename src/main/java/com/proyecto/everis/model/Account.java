@@ -46,10 +46,6 @@ public class Account{
 	@NotNull
 	private LocalDateTime fecha_apertura;
 	
-	@ApiModelProperty(notes = "Monto minimo de creacion de cuenta para cliente personal vip")
-	@NotNull
-	private Double monto_minimo;
-	
 	@ApiModelProperty(notes = "Lista de los firmantes autorizados, puede ser nulo")
 	private List<String> firmantes;
 	

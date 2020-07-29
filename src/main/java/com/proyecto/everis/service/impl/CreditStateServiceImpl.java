@@ -1,5 +1,7 @@
 package com.proyecto.everis.service.impl;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +57,12 @@ public class CreditStateServiceImpl implements ICreditStateService {
 	public Flux<CreditState> findByCreditId(String id) {
 		// TODO Auto-generated method stub
 		return repository.findByCreditId(id);
+	}
+
+	@Override
+	public Flux<CreditState> findByCreditIdAndFecha(LocalDateTime fecha1, LocalDateTime fecha2, String id) {
+		// TODO Auto-generated method stub
+		return repository.findByCreditIdAndFecha(fecha1, fecha2, id);
 	}
 	
 }

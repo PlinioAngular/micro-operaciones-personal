@@ -5,23 +5,18 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.proyecto.everis.model.Bank;
-import com.proyecto.everis.model.Product;
 
 import lombok.Data;
 
-//DTO para listado de cuentas por cliente
+//DTO para listado de cuenta por bancos
 @Data
-public class AccountDTO {
+public class AccountConsolidateDTO {
 	
+	private String tipoCuenta;
 	private String descripcion;
-	private Double monto;
-	private Product product;
-	private Bank banco;
-	
+	private Double monto;	
 	@JsonSerialize(using = ToStringSerializer.class) 
-	private LocalDateTime fecha_apertura;
-	
+	private LocalDateTime fecha_apertura;	
 	private List<String> firmantes;
 	private List<String> titulares;
 

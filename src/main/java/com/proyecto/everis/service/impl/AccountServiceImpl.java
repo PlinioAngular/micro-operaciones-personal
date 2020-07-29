@@ -58,4 +58,10 @@ public class AccountServiceImpl implements IAccountService {
 		return repository.findByClientId(id);
 	}
 
+	@Override
+	public Flux<Account> findByClientIdAndBankId(String idClient, String ibBank) {
+		// TODO Auto-generated method stub
+		return repository.findByClientIdAndBankId(idClient, ibBank);
+	}
+
 }

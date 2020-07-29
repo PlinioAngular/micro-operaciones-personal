@@ -7,6 +7,7 @@ import com.proyecto.everis.model.CreditState;
 
 import lombok.Data;
 
+//DTO para listado de movimientos por credito
 @Data
 public class CreditStateDTO {
 	

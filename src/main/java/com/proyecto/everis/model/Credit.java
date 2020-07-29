@@ -32,6 +32,10 @@ public class Credit {
 	@NotNull
 	private String productId;
 	
+	@ApiModelProperty(notes = "Banco")
+	@NotNull
+	private String bankId;
+	
 	@ApiModelProperty(notes = "Fecha de apertura")
 	@JsonSerialize(using = ToStringSerializer.class)
 	@NotNull
@@ -43,5 +47,8 @@ public class Credit {
 	
 	@ApiModelProperty(notes = "Monto consumido")
 	private Double consumido;
+	
+	@ApiModelProperty(notes = "Estado del crédito")
+	private boolean statusCredit;
 
 }

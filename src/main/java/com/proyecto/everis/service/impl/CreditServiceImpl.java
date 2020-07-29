@@ -57,5 +57,11 @@ public class CreditServiceImpl implements ICreditService {
 		return repository.findByClientId(id);
 	}
 
+	@Override
+	public Flux<Credit> findByClientIdAndBankId(String idClient, String ibBank) {
+		// TODO Auto-generated method stub
+		return repository.findByClientIdAndBankId(idClient, ibBank);
+	}
+
 
 }

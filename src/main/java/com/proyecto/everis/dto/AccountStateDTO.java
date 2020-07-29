@@ -8,6 +8,7 @@ import com.proyecto.everis.model.AccountState;
 
 import lombok.Data;
 
+//DTO para listado de movimientos por cuenta
 @Data
 public class AccountStateDTO {
 	

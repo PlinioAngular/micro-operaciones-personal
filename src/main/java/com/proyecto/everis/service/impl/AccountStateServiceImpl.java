@@ -1,5 +1,7 @@
 package com.proyecto.everis.service.impl;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +58,18 @@ public class AccountStateServiceImpl implements IAccountStateService {
 	public Flux<AccountState> findByAccountId(String id) {
 		// TODO Auto-generated method stub
 		return repository.findByAccountId(id);
+	}
+
+	@Override
+	public Flux<AccountState> findAccount(LocalDateTime fecha1,LocalDateTime fecha2,String id) {
+		// TODO Auto-generated method stub
+		return repository.findAccount(fecha1,fecha2,id);
+	}
+
+	@Override
+	public Flux<AccountState> findByAccountIdAndFecha(LocalDateTime fecha1, LocalDateTime fecha2, String id) {
+		// TODO Auto-generated method stub
+		return repository.findByAccountIdAndFecha(fecha1, fecha2, id);
 	}
 
 }
