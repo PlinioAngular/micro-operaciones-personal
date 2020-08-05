@@ -128,7 +128,7 @@ public class ValidationAccount {
 		Client client=new Client();
 		WebClient webClient=WebClient.create("http://localhost:8099");
 		client=webClient.get().uri("/micro-crud/clients/"+id).retrieve().bodyToMono(Client.class).block();
-		credit=webClient.get().uri("/micro-operaciones-personal/credits/viewcredits/"+id).retrieve().bodyToFlux(Credit.class).collectList().block();
+		credit=webClient.get().uri("/micro-operaciones-personal/reports/viewcredits/"+id).retrieve().bodyToFlux(Credit.class).collectList().block();
 		Stream<Credit> crs=credit.stream();
 		crs.forEach(cre->{
 			if(cre.isStatusCredit()) {

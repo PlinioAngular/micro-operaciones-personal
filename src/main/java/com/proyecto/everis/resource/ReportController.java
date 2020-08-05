@@ -7,6 +7,8 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,8 @@ import com.proyecto.everis.service.ICreditService;
 import com.proyecto.everis.service.ICreditStateService;
 import com.proyecto.everis.util.MethodsAccount;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import io.swagger.annotations.ApiOperation;
 import reactor.core.publisher.Mono;
 
@@ -58,6 +62,8 @@ public class ReportController {
             value = "Ver cuentas por cliente",
             notes = "Lista las cuentas a un cliente determinado"
     )
+	@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+	@TimeLimiter(name="ms2")
 	@GetMapping("/viewaccounts/{id}")
 	Mono<ClientAccountDTO> listAccountByClientId(@PathVariable String id) {	
 		ClientAccountDTO dto= new ClientAccountDTO();
@@ -90,6 +96,8 @@ public class ReportController {
             value = "Estado de cuenta",
             notes = "Lista los movimientos de cuenta por id"
     )
+	@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+	@TimeLimiter(name="ms2")
 	@GetMapping("/stateaccounts/{id}")
 	Mono<AccountStateDTO> listStateAccountById(@PathVariable String id) {
 		
@@ -108,6 +116,8 @@ public class ReportController {
             value = "Estado de cuenta",
             notes = "Lista los movimientos de cuenta por id y rango de fechas"
     )
+	@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+	@TimeLimiter(name="ms2")
 	@GetMapping("/stateaccountdates/{id}/{sfecha1}/{sfecha2}")
 	Mono<AccountStateDTO> listStateAccountByIdAndFecha(@PathVariable String id,@PathVariable String sfecha1,@PathVariable String sfecha2) {
 		LocalDateTime fecha1= LocalDateTime.parse(sfecha1);
@@ -131,6 +141,8 @@ public class ReportController {
             value = "Ver credito por cliente",
             notes = "Lista los creditos de un cliente determinado"
     )
+	@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+	@TimeLimiter(name="ms2")
 	@GetMapping("/viewcredits/{id}")
 	Mono<ClientCreditDTO> listCreditByClientId(@PathVariable String id) {	
 		ClientCreditDTO dto= new ClientCreditDTO();
@@ -148,6 +160,8 @@ public class ReportController {
             value = "Movimientos de credito",
             notes = "Lista los movimientos de cuenta por id"
     )
+	@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+	@TimeLimiter(name="ms2")
 	@GetMapping("/statecredits/{id}")
 	Mono<CreditStateDTO> listStateCreditById(@PathVariable String id) {
 		
@@ -166,6 +180,8 @@ public class ReportController {
             value = "Movimientos de credito",
             notes = "Lista los movimientos de cuenta por id y rango de fechas"
     )
+	@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+	@TimeLimiter(name="ms2")
 	@GetMapping("/statecreditdates/{id}/{sfecha1}/{sfecha2}")
 	Mono<CreditStateDTO> listStateCreditByIdAnDate(@PathVariable String id,@PathVariable String sfecha1,@PathVariable String sfecha2) {
 		LocalDateTime fecha1= LocalDateTime.parse(sfecha1);
@@ -190,6 +206,8 @@ public class ReportController {
             value = "Todo los productos",
             notes = "Lista las cuentas y credito por bancos de un cliente"
     )
+	@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+	@TimeLimiter(name="ms2")
 	@GetMapping("/oneclientconsolidates/{id}")
 	Mono<ClientAccountConsolidateDTO> listBankId(@PathVariable String id){
 		ClientAccountConsolidateDTO cuentaConsolidada=new ClientAccountConsolidateDTO();
@@ -227,5 +245,10 @@ public class ReportController {
 	}
 	
 	// ### FIN REPORTE CONSOLIDADO POR CLIENTE ### //
+	
+	//Método de repsuesta del circuitbraker
+	Mono<ResponseEntity<String>> findError(Exception ex){
+		return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ha ocurrido un error intente en unos minutos"));
+	}
 
 }

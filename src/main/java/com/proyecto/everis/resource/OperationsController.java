@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,8 @@ import com.proyecto.everis.service.ICreditService;
 import com.proyecto.everis.service.ICreditStateService;
 import com.proyecto.everis.util.MethodsAccount;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import io.swagger.annotations.ApiOperation;
 import reactor.core.publisher.Mono;
 
@@ -46,6 +50,8 @@ public class OperationsController {
 	            value = "Movimientos de cuenta",
 	            notes = "Resgistra los movimientos de cuenta, retiro o depósito"
 	    )
+		@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+		@TimeLimiter(name="ms2")
 		@PostMapping("/updateaccounts")
 		Mono<Account> updateAccount(HttpServletRequest request) {
 			Double cambio=Double.parseDouble(request.getParameter("monto"));
@@ -79,6 +85,8 @@ public class OperationsController {
 	            value = "Transferencia",
 	            notes = "Realiza y registra las transferencias entre cuentas"
 	    )
+		@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+		@TimeLimiter(name="ms2")
 		@PostMapping("/transferaccounts")
 		Mono<Account> transferAccount(HttpServletRequest request) {
 			Double cambio=Double.parseDouble(request.getParameter("monto"));
@@ -117,6 +125,8 @@ public class OperationsController {
 	            value = "Pago de credito",
 	            notes = "Resgistra y realiza el pago de creditos desde una cuenta"
 	    )
+		@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+		@TimeLimiter(name="ms2")
 		@PostMapping("/paycredits")
 		Mono<Account> payCredit(HttpServletRequest request) {
 			Double cambio=Double.parseDouble(request.getParameter("monto"));
@@ -155,6 +165,8 @@ public class OperationsController {
 	            value = "Registro de movimientos de TC",
 	            notes = "También actualiza la cuenta acorde al movimiento"
 	    )
+		@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+		@TimeLimiter(name="ms2")
 		@GetMapping("/updatecredits/{id}/{monto}")
 		Mono<Credit> updateCredit(@PathVariable String id,@PathVariable String monto) {
 			Double cambio=Double.parseDouble(monto);
@@ -177,4 +189,9 @@ public class OperationsController {
 		}
 		
 		//### Fin de las operaciones de credito
+		
+		//Método de repsuesta del circuitbraker
+		Mono<ResponseEntity<String>> findError(Exception ex){
+			return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ha ocurrido un error intente en unos minutos"));
+		}
 }
