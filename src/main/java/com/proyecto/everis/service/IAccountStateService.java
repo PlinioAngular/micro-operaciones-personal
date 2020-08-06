@@ -13,5 +13,7 @@ public interface IAccountStateService extends ICRUD<AccountState>{
 	Flux<AccountState> findAccount(LocalDateTime fecha1,LocalDateTime fecha2,String id);
 	
 	Flux<AccountState> findByAccountIdAndFecha(LocalDateTime fecha1,LocalDateTime fecha2, String id);
+	
+	Flux<AccountState> findByAccountIdAndFechaAndTipoMovimiento(LocalDateTime fecha1,LocalDateTime fecha2, String id,String tipoMovimiento, String idBanco);
 
 }

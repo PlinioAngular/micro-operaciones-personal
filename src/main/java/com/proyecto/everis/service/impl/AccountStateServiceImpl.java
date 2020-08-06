@@ -72,4 +72,11 @@ public class AccountStateServiceImpl implements IAccountStateService {
 		return repository.findByAccountIdAndFecha(fecha1, fecha2, id);
 	}
 
+	@Override
+	public Flux<AccountState> findByAccountIdAndFechaAndTipoMovimiento(LocalDateTime fecha1, LocalDateTime fecha2,
+			String id, String tipoMovimiento, String idBanco) {
+		// TODO Auto-generated method stub
+		return repository.findByAccountIdAndFechaAndTipoMovimiento(fecha1, fecha2, id, tipoMovimiento, idBanco);
+	}
+
 }

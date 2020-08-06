@@ -2,9 +2,11 @@ package com.proyecto.everis.util;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -119,12 +121,19 @@ public class MethodsAccount {
 	    return hoy;
 	}
 	
-	//Retorna estados de cuenta del mes actual
-	public Flux<AccountState> findNumberAccount(@PathVariable String id){
+	//Retorna estado de cuenta del mes actual
+	public Flux<AccountState> findNumberAccount(String id){
 		LocalDateTime fecha1=this.firstDay();
 		LocalDateTime fecha2=this.lastDay();
-	       System.out.print(servicestate.findAccount(fecha1,fecha2,id).collectList().block().size());
 		return servicestate.findAccount(fecha1,fecha2,id);
+	}
+	
+	//Retorna las operaciones de una cuenta de acuerdo al tipo d eoperacion
+	public Flux<AccountState> findNumberAccountState(String id,String tipoMovimiento, String idBanco){
+		LocalDateTime fecha1=this.firstDay();
+		LocalDateTime fecha2=this.lastDay();
+		return servicestate.findByAccountIdAndFechaAndTipoMovimiento(fecha1,fecha2,id,tipoMovimiento,idBanco);
+		
 	}
 
 }

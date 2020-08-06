@@ -17,5 +17,21 @@ public class Bank {
 	@ApiModelProperty(notes = "Nombre del banco")
 	@NotNull
 	private String nameBank;
+	
+	@ApiModelProperty(notes = "Cantidad de comisiones internas")
+	@NotNull
+	private int cantOpeInter;
+	
+	@ApiModelProperty(notes = "Comisión interna")
+	@NotNull
+	private Double comInter;
+	
+	@ApiModelProperty(notes = "Cantidad de comisiones externas")
+	@NotNull
+	private int cantOpeExter;
+	
+	@ApiModelProperty(notes = "Comisión externa")
+	@NotNull
+	private Double comExter;
 
 }

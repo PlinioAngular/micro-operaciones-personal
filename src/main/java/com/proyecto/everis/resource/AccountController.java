@@ -66,7 +66,7 @@ public class AccountController {
             value = "Listar toda cuenta",
             notes = "No necesita parámetros"
     )
-	@CircuitBreaker(name="ms2", fallbackMethod = "findError")
+	@CircuitBreaker(name="ms2")
 	@TimeLimiter(name="ms2")
 	@GetMapping(produces="application/json")
 	Flux<Account> list() {

@@ -37,5 +37,13 @@ public class AccountState {
 	@ApiModelProperty(notes = "Detalles del movimiento")
 	@NotNull
 	private String descripcion;
+	
+	@ApiModelProperty(notes = "Tipo del movimiento puede ser compras, movimiento de dinero o comisión")
+	@NotNull
+	private String tipoMovimiento;
+	
+	@ApiModelProperty(notes = "Banco en el que se realiza la operacion")
+	@NotNull
+	private String bancOpe;
 
 }
